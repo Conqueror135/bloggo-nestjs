@@ -7,6 +7,7 @@ import { UserSchema } from './models/user.model';
 import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
 import { AuthController } from './controllers/auth.controller';
+import { CommonAppModule } from '@common/common-app.module';
 
 @Module({
   imports: [
@@ -16,8 +17,9 @@ import { AuthController } from './controllers/auth.controller';
         schema: UserSchema,
       },
     ]),
+    CommonAppModule,
   ],
   controllers: [AuthController],
-  providers: [UserRepository, UserCommonService, UserService, AuthService],
+  providers: [UserCommonService, UserRepository, UserService, AuthService],
 })
 export class UserModule {}
