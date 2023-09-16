@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { UserService } from '../services/user.service';
 import { JwtAuthGuard } from '@common/services/jwt-auth.guard';
-import { CreateUserDto } from '../dtos/user.dto';
+import { CreateUserDto, IssueUserDto } from '../dtos/user.dto';
 import { PaginationDto } from '@common/dtos/pagination.dto';
 
 @Controller('user')
@@ -22,6 +22,11 @@ export class UserController {
   @Post()
   async createUser(@Body() userDto: CreateUserDto) {
     return await this.userService.create(userDto);
+  }
+  @UseGuards(JwtAuthGuard)
+  @Post('issue-account')
+  async issueAccount(@Body() userDto: IssueUserDto) {
+    return await this.userService.issueAccount(userDto);
   }
 
   @UseGuards(JwtAuthGuard)

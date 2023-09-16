@@ -104,3 +104,29 @@ export class LoginUserDto {
   @IsNotEmpty() username: string;
   @IsNotEmpty() password: string;
 }
+
+export class IssueUserDto {
+  @Expose()
+  fullname: string;
+  bio: string;
+  @Expose()
+  @IsNotEmpty()
+  email: string;
+  @Expose()
+  @IsNotEmpty()
+  username: string;
+  password: string;
+  gender: string;
+  address: string;
+  avatar: string;
+  status: string;
+  phone: string;
+  @Expose()
+  type: string;
+  @Expose()
+  is_sysadmin: boolean;
+  @Expose()
+  is_deleted: boolean;
+  @Expose()
+  active: boolean;
+}
