@@ -100,3 +100,8 @@ export class UpdateUserDto {
   @Expose()
   active: boolean;
 }
+
+export class LoginUserDto {
+  @IsNotEmpty() username: string;
+  @IsNotEmpty() password: string;
+}
