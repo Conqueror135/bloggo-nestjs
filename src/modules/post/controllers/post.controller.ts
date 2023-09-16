@@ -38,10 +38,15 @@ export class PostController {
   }
 
   @Get('list')
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(30)
   async getListPost(@Query() { page, limit }: PaginationDto) {
     return await this.postService.getList(page, limit);
   }
+
   @Get('by-category/:id')
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(30)
   getListPostByCategory(
     @Param('id') id: string,
     @Query() { page, limit }: PaginationDto,
@@ -50,14 +55,9 @@ export class PostController {
   }
 
   @Get(':id')
-  getPostById(@Param('id') id: string) {
-    return this.postService.getPostById(id);
-  }
-
-  @Get(':id/in-cache')
   @UseInterceptors(CacheInterceptor)
   @CacheTTL(30)
-  getPostByIdWithCache(@Param('id') id: string) {
+  getPostById(@Param('id') id: string) {
     return this.postService.getPostById(id);
   }
 
