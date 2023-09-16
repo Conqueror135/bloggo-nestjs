@@ -28,4 +28,15 @@ export class UserService {
   async findById(id: string) {
     return await this.userRepository.findById(id);
   }
+  async deleteUser(id: string) {
+    return await this.userRepository.findByIdAndUpdate(id, {
+      is_deleted: false,
+    });
+  }
+  async getList() {
+    return await this.userRepository.getByCondition({ is_deleted: false });
+  }
+  async updateUser(id: string, userDto: CreateUserDto) {
+    return await this.userRepository.findByIdAndUpdate(id, userDto);
+  }
 }

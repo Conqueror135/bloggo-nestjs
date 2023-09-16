@@ -8,6 +8,7 @@ import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
 import { AuthController } from './controllers/auth.controller';
 import { CommonAppModule } from '@common/common-app.module';
+import { UserController } from './controllers/user.controller';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { CommonAppModule } from '@common/common-app.module';
     ]),
     CommonAppModule,
   ],
-  controllers: [AuthController],
+  controllers: [AuthController, UserController],
   providers: [UserCommonService, UserRepository, UserService, AuthService],
   exports: [UserService],
 })
