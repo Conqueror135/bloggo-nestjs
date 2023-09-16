@@ -53,6 +53,9 @@ export class BaseRepository<T extends Document> {
   async deleteByCondition(filter) {
     return this.model.deleteMany(filter);
   }
+  async countDocuments(filter) {
+    return this.model.countDocuments(filter);
+  }
 
   async findByConditionAndUpdate(filter, update) {
     return this.model.findOneAndUpdate(filter as FilterQuery<T>, update);

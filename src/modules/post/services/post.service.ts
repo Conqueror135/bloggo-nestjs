@@ -30,22 +30,85 @@ export class PostService {
       throw new NotFoundException(postId);
     }
   }
-  async getPostByMe(id: string) {
-    const data = await this.postRepository.getByCondition({
+  async getPostByMe(id: string, page: number, limit: number) {
+    const query = {
       user: id,
       is_deleted: false,
+    };
+    if (!page) {
+      page = 1;
+    }
+    if (!limit) {
+      limit = 10;
+    }
+    const total = await this.postRepository.countDocuments(query);
+    let totalPage = Math.floor(Number(total) / Number(limit));
+    if (total % limit !== 0) {
+      totalPage += 1;
+    }
+
+    const data = await this.postRepository.getByCondition(query, null, {
+      sort: {
+        updated_at: -1,
+      },
+      skip: (Number(page) - 1) * Number(limit),
+      limit: Number(limit),
     });
 
-    return data;
+    return { data, total, page, limit, totalPage };
   }
-  async getList() {
-    return await this.postRepository.getByCondition({ is_deleted: false });
+  async getList(page: number, limit: number) {
+    if (!page) {
+      page = 1;
+    }
+    if (!limit) {
+      limit = 10;
+    }
+    const total = await this.postRepository.countDocuments({
+      is_deleted: false,
+    });
+    let totalPage = Math.floor(Number(total) / Number(limit));
+    if (total % limit !== 0) {
+      totalPage += 1;
+    }
+    const data = await this.postRepository.getByCondition(
+      { is_deleted: false },
+      null,
+      {
+        sort: {
+          updated_at: -1,
+        },
+        skip: (Number(page) - 1) * Number(limit),
+        limit: Number(limit),
+      },
+    );
+    return { data, total, page, limit, totalPage };
   }
-  async getListByCategory(idCategory: string) {
-    return await this.postRepository.getByCondition({
+  async getListByCategory(idCategory: string, page: number, limit: number) {
+    const query = {
       is_deleted: false,
       category: idCategory,
+    };
+    if (!page) {
+      page = 1;
+    }
+    if (!limit) {
+      limit = 10;
+    }
+    const total = await this.postRepository.countDocuments(query);
+    let totalPage = Math.floor(Number(total) / Number(limit));
+    if (total % limit !== 0) {
+      totalPage += 1;
+    }
+
+    const data = await this.postRepository.getByCondition(query, null, {
+      sort: {
+        updated_at: -1,
+      },
+      skip: (Number(page) - 1) * Number(limit),
+      limit: Number(limit),
     });
+    return { data, total, page, limit, totalPage };
   }
   async deletePost(id: string) {
     return await this.postRepository.deleteOne(id);

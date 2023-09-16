@@ -33,8 +33,32 @@ export class UserService {
       is_deleted: false,
     });
   }
-  async getList() {
-    return await this.userRepository.getByCondition({ is_deleted: false });
+  async getList(page: number, limit: number) {
+    if (!page) {
+      page = 1;
+    }
+    if (!limit) {
+      limit = 10;
+    }
+    const total = await this.userRepository.countDocuments({
+      is_deleted: false,
+    });
+    let totalPage = Math.floor(Number(total) / Number(limit));
+    if (total % limit !== 0) {
+      totalPage += 1;
+    }
+    const data = await this.userRepository.getByCondition(
+      { is_deleted: false },
+      null,
+      {
+        sort: {
+          updated_at: -1,
+        },
+        skip: (Number(page) - 1) * Number(limit),
+        limit: Number(limit),
+      },
+    );
+    return { data, total, page, limit, totalPage };
   }
   async updateUser(id: string, userDto: CreateUserDto) {
     return await this.userRepository.findByIdAndUpdate(id, userDto);

@@ -6,11 +6,13 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { CategoryService } from '../services/category.service';
 import { CreateCategoryDto } from '../dtos/category.dto';
 import { JwtAuthGuard } from '@common/services/jwt-auth.guard';
+import { PaginationDto } from '@common/dtos/pagination.dto';
 
 @Controller('category')
 export class CategoryController {
@@ -22,8 +24,8 @@ export class CategoryController {
   }
 
   @Get('list')
-  async getListCategory() {
-    return await this.categoryService.getList();
+  async getListCategory(@Query() { page, limit }: PaginationDto) {
+    return await this.categoryService.getList(page, limit);
   }
   @UseGuards(JwtAuthGuard)
   @Post()

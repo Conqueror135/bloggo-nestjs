@@ -6,11 +6,13 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from '../services/user.service';
 import { JwtAuthGuard } from '@common/services/jwt-auth.guard';
 import { CreateUserDto } from '../dtos/user.dto';
+import { PaginationDto } from '@common/dtos/pagination.dto';
 
 @Controller('user')
 export class UserController {
@@ -24,8 +26,8 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Get('list')
-  async getListUser() {
-    return await this.userService.getList();
+  async getListUser(@Query() { page, limit }: PaginationDto) {
+    return await this.userService.getList(page, limit);
   }
 
   @UseGuards(JwtAuthGuard)
