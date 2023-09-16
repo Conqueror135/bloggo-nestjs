@@ -11,6 +11,7 @@ import { CacheModule } from '@nestjs/cache-manager';
 import * as redisStore from 'cache-manager-redis-store';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
+import { CommentModule } from './modules/comment/comment.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
         },
       },
     }),
+    CommentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
