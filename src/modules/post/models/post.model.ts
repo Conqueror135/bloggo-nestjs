@@ -1,4 +1,4 @@
-import { CATALOG, USER } from 'src/commons/constants/dbCollection.constant';
+import { CATEGORY, USER } from 'src/commons/constants/dbCollection.constant';
 import { Document, Schema } from 'mongoose';
 
 export const PostSchema = new Schema(
@@ -9,7 +9,7 @@ export const PostSchema = new Schema(
     status: { type: String },
     avatar: { type: String },
     user: { ref: USER, type: Schema.Types.ObjectId },
-    catalog: { ref: CATALOG, type: Schema.Types.ObjectId },
+    category: { ref: CATEGORY, type: Schema.Types.ObjectId },
     rate_good: { type: Number },
     rate_great: { type: Number },
     rate_bad: { type: Number },

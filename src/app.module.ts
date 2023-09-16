@@ -6,6 +6,7 @@ import { PostModule } from './modules/post/post.module';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CommonAppModule } from './commons/common-app.module';
+import { CategoryModule } from './modules/category/category.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { CommonAppModule } from './commons/common-app.module';
     ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.DATABASE_URL),
     CommonAppModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
