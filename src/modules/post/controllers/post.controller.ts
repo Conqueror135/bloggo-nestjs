@@ -1,9 +1,11 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
+  Put,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -30,8 +32,29 @@ export class PostController {
     return this.postService.getPostByMe(req.user._id);
   }
 
+  @Get('list')
+  async getListPost() {
+    return await this.postService.getList();
+  }
+  @Get('by-category/:id')
+  getListPostByCategory(@Param('id') id: string) {
+    return this.postService.getListByCategory(id);
+  }
+
   @Get(':id')
   getPostById(@Param('id') id: string) {
     return this.postService.getPostById(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(':id')
+  async deletePost(@Param('id') id: string) {
+    return await this.postService.deletePostSoft(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put(':id')
+  async updatePost(@Param('id') id: string, @Body() postDto: CreatePostDto) {
+    return await this.postService.update(id, postDto);
   }
 }

@@ -30,10 +30,13 @@ export class CategoryController {
   async create(@Body() categoryDto: CreateCategoryDto) {
     return this.categoryService.createCategory(categoryDto);
   }
+
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async deleteSoft(@Param('id') id: string) {
     return await this.categoryService.deleteCategorySoft(id);
   }
+  @UseGuards(JwtAuthGuard)
   @Put(':id')
   async updateCategory(
     @Param('id') id: string,

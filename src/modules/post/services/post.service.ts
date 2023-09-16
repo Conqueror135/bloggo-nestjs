@@ -38,4 +38,24 @@ export class PostService {
 
     return data;
   }
+  async getList() {
+    return await this.postRepository.getByCondition({ is_deleted: false });
+  }
+  async getListByCategory(idCategory: string) {
+    return await this.postRepository.getByCondition({
+      is_deleted: false,
+      category: idCategory,
+    });
+  }
+  async deletePost(id: string) {
+    return await this.postRepository.deleteOne(id);
+  }
+  async deletePostSoft(id: string) {
+    return await this.postRepository.findByIdAndUpdate(id, {
+      is_deleted: true,
+    });
+  }
+  async update(id: string, postDto: CreatePostDto) {
+    return await this.postRepository.findByIdAndUpdate(id, postDto);
+  }
 }
