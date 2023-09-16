@@ -9,11 +9,14 @@ import {
   Query,
   Req,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
+
 import { PostService } from '../services/post.service';
 import { CreatePostDto } from '../dtos/post.dto';
 import { JwtAuthGuard } from '@common/services/jwt-auth.guard';
 import { PaginationDto } from '@common/dtos/pagination.dto';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 
 @Controller('post')
 export class PostController {
@@ -48,6 +51,13 @@ export class PostController {
 
   @Get(':id')
   getPostById(@Param('id') id: string) {
+    return this.postService.getPostById(id);
+  }
+
+  @Get(':id/in-cache')
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(30)
+  getPostByIdWithCache(@Param('id') id: string) {
     return this.postService.getPostById(id);
   }
 

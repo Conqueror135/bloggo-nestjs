@@ -7,6 +7,8 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CommonAppModule } from './commons/common-app.module';
 import { CategoryModule } from './modules/category/category.module';
+import { CacheModule } from '@nestjs/cache-manager';
+import * as redisStore from 'cache-manager-redis-store';
 
 @Module({
   imports: [
@@ -16,6 +18,12 @@ import { CategoryModule } from './modules/category/category.module';
     MongooseModule.forRoot(process.env.DATABASE_URL),
     CommonAppModule,
     CategoryModule,
+    CacheModule.register({
+      isGlobal: true,
+      store: redisStore,
+      host: process.env.REDIS_HOST,
+      port: process.env.REDIS_PORT,
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
