@@ -39,6 +39,8 @@ export class AuthService {
         const userReal = plainToClass(UserDto, userInDb, {
           excludeExtraneousValues: true,
         });
+        userReal._id = userInDb._id;
+
         const token = await this.jwtHelperService.createToken(userReal);
         return {
           token,

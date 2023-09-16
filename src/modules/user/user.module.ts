@@ -21,5 +21,6 @@ import { CommonAppModule } from '@common/common-app.module';
   ],
   controllers: [AuthController],
   providers: [UserCommonService, UserRepository, UserService, AuthService],
+  exports: [UserService],
 })
 export class UserModule {}

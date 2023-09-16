@@ -5,6 +5,7 @@ export class CreatePostDto {
   title: string;
 
   content: string;
+  user: string;
 }
 
 export class UpdatePostDto {
